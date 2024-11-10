@@ -35,9 +35,9 @@ class CurrencyViewController: UIViewController {
   private lazy var floatingButton: UIButton = {
     let button = UIButton(type: .system)
     button.translatesAutoresizingMaskIntoConstraints = false
-    button.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
+    button.setImage(UIImage(systemName: "pencil"), for: .normal)
     button.tintColor = .systemBlue
-    button.backgroundColor = .white
+    button.backgroundColor = .yellow
     button.layer.cornerRadius = 30
     button.layer.shadowColor = UIColor.black.cgColor
     button.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -174,6 +174,11 @@ class CurrencyViewController: UIViewController {
   @objc private func currencySearch() {
     searchBar.isHidden = !searchBar.isHidden
     buttonTextfieldVisibility.setImage(UIImage(systemName: searchBar.isHidden ? ImageConstants.searchImage : ImageConstants.cancelImage), for: .normal)
+    if searchBar.isHidden { // Resign Keyboard when search bar is hidden
+      searchBar.resignFirstResponder()
+    } else {
+      searchBar.becomeFirstResponder()
+    }
   }
   
   @objc private func showFilterSheet() {

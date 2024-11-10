@@ -58,7 +58,6 @@ class CurrencyViewController: UIViewController {
       await viewModel.fetchData()
     }
     
-    // Bind to the ViewModel (assuming @Published properties)
     viewModel.$data
       .sink { [weak self] data in
         // Update UI with data
@@ -130,13 +129,11 @@ class CurrencyViewController: UIViewController {
     ])
   }
   
-  // Call this function when you want to show the loader
   func showLoader() {
     loaderView.isHidden = false
     loaderView.startAnimating()
   }
   
-  // Call this function to hide the loader
   func hideLoader() {
     loaderView.stopAnimating()
     loaderView.isHidden = true
@@ -193,6 +190,7 @@ class CurrencyViewController: UIViewController {
   }
 }
 
+// MARK: TableView DataSource
 extension CurrencyViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return viewModel.filteredData.isEmpty ? viewModel.data.count : viewModel.filteredData.count
@@ -206,6 +204,7 @@ extension CurrencyViewController: UITableViewDataSource {
   }
 }
 
+// MARK: BottomSheet Controller Delegate Calls
 extension CurrencyViewController: BottomSheetProtocol {
   func handleSelectedFilters(option: FilterOption) {
     viewModel.applyFilters(option: option)
@@ -216,15 +215,13 @@ extension CurrencyViewController: BottomSheetProtocol {
   }
 }
 
+// MARK: Searchbar Delegate handling
 extension CurrencyViewController: UISearchBarDelegate {
-  // MARK: - UISearchBarDelegate Methods
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    // Perform search logic (lazy search or filtering)
     viewModel.search(query: searchText)
   }
   
   func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-    // Hide keyboard when cancel is clicked
     searchBar.resignFirstResponder()
     return true
   }

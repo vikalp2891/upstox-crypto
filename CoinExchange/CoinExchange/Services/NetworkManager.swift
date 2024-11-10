@@ -36,6 +36,7 @@ class NetworkManager {
   }
 }
 
+// Extending network request with URLSession for dependency Injection
 extension URLSession: NetworkRequestable {
   func fetchData<T: Decodable>(for url: URL, httpMethod: HttpMethod) async throws -> T {
     var request = URLRequest(url: url)

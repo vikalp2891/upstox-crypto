@@ -9,3 +9,11 @@ enum CoinType: String {
   case coin = "coin"
   case token = "token"
 }
+
+enum FilterButtonType {
+  case activeCoin
+  case onlyCoin
+  case onlyToken
+  case inactiveCoin
+  case newCoin
+}

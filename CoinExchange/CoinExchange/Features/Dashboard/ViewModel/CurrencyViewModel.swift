@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Network
 
 class CurrencyViewModel: ObservableObject {
   
@@ -21,8 +22,6 @@ class CurrencyViewModel: ObservableObject {
     self.databaseManager = databaseManager
   }
   
-
-  // Usage of `fetchData` with asynchronous network and database calls.
   func fetchData() async {
     do {
       let cryptoCoins = try await databaseManager.fetchCryptoCoins()
@@ -49,7 +48,7 @@ class CurrencyViewModel: ObservableObject {
     // Result variable to hold the current filtered data
     var result: [Coins] = filteredData
     
-    // If isActive is specified, filter accordingly
+    // Check if coin or token isActive
     if let isActive = option.isActive, let type = option.type {
       if (type == "coin" || type == "token") && isActive {
         let filteredCoins = data.filter { $0.isActive == isActive && $0.type == type }
@@ -61,13 +60,13 @@ class CurrencyViewModel: ObservableObject {
       }
     }
     
-    // If isNew is specified, filter accordingly
+    // Check if coin & isNew
     else if let isNew = option.isNew {
       let new = data.filter { $0.isNew == isNew && $0.type == "coin" }
       result.append(contentsOf: new)
     }
     
-    // If type is specified, filter accordingly
+    // Check if type only coin or only token
     else if let type = option.type {
       let coinType = data.filter { $0.type == type }
       result.append(contentsOf: coinType)
@@ -83,10 +82,8 @@ class CurrencyViewModel: ObservableObject {
   // Function to deselect a filter
   func deselectFilter(option: FilterOption) {
     
-    // Result variable to hold the current filtered data
     var result: [Coins] = filteredData
     
-    // If isActive is specified, filter accordingly
     if let isActive = option.isActive, let type = option.type {
       if (type == "coin" || type == "token") && isActive {
         result.removeAll{$0.isActive == isActive && $0.type == type}
@@ -96,20 +93,16 @@ class CurrencyViewModel: ObservableObject {
       }
     }
     
-    // If isNew is specified, filter accordingly
     else if let isNew = option.isNew {
       result.removeAll{ $0.isNew == isNew && $0.type == "coin" }
     }
     
-    // If type is specified, filter accordingly
     else if let type = option.type {
       result.removeAll{ $0.type == type }
     }
     
-    // Remove duplicates
     result = Array(Set(result))
     
-    // Update the filtered items array
     filteredData = result
   }
   
@@ -118,5 +111,4 @@ class CurrencyViewModel: ObservableObject {
       item.name.lowercased().contains(query.lowercased()) || item.symbol.lowercased().contains(query.lowercased())
     }
   }
-  
 }

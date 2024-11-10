@@ -7,7 +7,6 @@
 
 import Foundation
 
-//MARK: Codable object for Coins Data
 struct Coins: Codable, Hashable {
   let name: String
   let symbol: String
@@ -16,7 +15,6 @@ struct Coins: Codable, Hashable {
   let isNew: Bool
 }
 
-//MARK: To filter out coins
 struct FilterOption {
   var isActive: Bool?
   var type: String?
